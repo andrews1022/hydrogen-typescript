@@ -1,30 +1,30 @@
-import {useCartUI} from './CartUIProvider.client';
+import { useCartUI } from '../client/CartUIProvider.client';
 import CartIconWithItems from './CartIconWithItems.client';
 
 /**
  * A client component that defines the behavior when a user toggles a cart
  */
-export default function CartToggle({handleClick}) {
+export default function CartToggle({ handleClick }) {
   const cartUI = useCartUI();
 
   if (cartUI == null) {
     throw new Error('CartToggle must be a descendent of a CartUIProvider');
   }
 
-  const {isCartOpen, toggleCart} = cartUI;
+  const { isCartOpen, toggleCart } = cartUI;
 
   return (
     <button
-      type="button"
+      type='button'
       aria-expanded={isCartOpen}
-      aria-controls="cart"
+      aria-controls='cart'
       onClick={() => {
         toggleCart();
         handleClick();
       }}
     >
       <CartIconWithItems />
-      <span className="sr-only">Open cart</span>
+      <span className='sr-only'>Open cart</span>
     </button>
   );
 }

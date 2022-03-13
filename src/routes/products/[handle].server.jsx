@@ -1,26 +1,23 @@
-import {useShopQuery, Seo} from '@shopify/hydrogen';
-import {
-  ProductProviderFragment,
-  ProductSeoFragment,
-} from '@shopify/hydrogen/fragments';
+import { useShopQuery, Seo } from '@shopify/hydrogen';
+import { ProductProviderFragment, ProductSeoFragment } from '@shopify/hydrogen/fragments';
 import gql from 'graphql-tag';
 
-import ProductDetails from '../../components/ProductDetails.client';
-import NotFound from '../../components/NotFound.server';
-import Layout from '../../components/Layout.server';
+import ProductDetails from '../../components/client/ProductDetails.client';
+import NotFound from '../../components/server/NotFound.server';
+import Layout from '../../components/server/Layout.server';
 
-export default function Product({country = {isoCode: 'US'}, params}) {
-  const {handle} = params;
+export default function Product({ country = { isoCode: 'US' }, params }) {
+  const { handle } = params;
 
   const {
-    data: {product},
+    data: { product }
   } = useShopQuery({
     query: QUERY,
     variables: {
       country: country.isoCode,
-      handle,
+      handle
     },
-    preload: true,
+    preload: true
   });
 
   if (!product) {
@@ -29,7 +26,7 @@ export default function Product({country = {isoCode: 'US'}, params}) {
 
   return (
     <Layout>
-      <Seo type="product" data={product} />
+      <Seo type='product' data={product} />
       <ProductDetails product={product} />
     </Layout>
   );
