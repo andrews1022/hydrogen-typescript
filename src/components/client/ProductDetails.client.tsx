@@ -1,78 +1,15 @@
 import {
   flattenConnection,
-  useProduct,
   useParsedMetafields,
   ProductProvider,
   ProductTitle,
   ProductDescription,
-  ProductPrice,
-  AddToCartButton,
-  BuyNowButton
+  ProductPrice
 } from '@shopify/hydrogen/client';
 import ProductOptions from './ProductOptions.client';
 import Gallery from './Gallery.client';
-import { BUTTON_PRIMARY_CLASSES, BUTTON_SECONDARY_CLASSES } from './Button.client';
-
-const AddToCartMarkup = () => {
-  const { selectedVariant } = useProduct();
-  const isOutOfStock = !selectedVariant.availableForSale;
-
-  return (
-    <div className='space-y-2 mb-8'>
-      <AddToCartButton className={BUTTON_PRIMARY_CLASSES} disabled={isOutOfStock}>
-        {isOutOfStock ? 'Out of stock' : 'Add to bag'}
-      </AddToCartButton>
-      {isOutOfStock ? (
-        <p className='text-black text-center'>Available in 2-3 weeks</p>
-      ) : (
-        <BuyNowButton variantId={selectedVariant.id} className={BUTTON_SECONDARY_CLASSES}>
-          Buy it now
-        </BuyNowButton>
-      )}
-    </div>
-  );
-};
-
-const SizeChart = () => {
-  return (
-    <>
-      <h3 className='text-xl text-black font-semibold mt-8 mb-4' id='size-chart'>
-        Size Chart
-      </h3>
-      <table className='min-w-full table-fixed text-sm text-center bg-white'>
-        <thead>
-          <tr className='bg-black text-white'>
-            <th className='w-1/4 py-2 px-4 font-normal'>Board Size</th>
-            <th className='w-1/4 py-2 px-4 font-normal'>154</th>
-            <th className='w-1/4 py-2 px-4 font-normal'>158</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className='p-3 border border-black'>Weight Range</td>
-            <td className='p-3 border border-black'>120-180 lbs. /54-82kg</td>
-            <td className='p-3 border border-black'>150-200 lbs. /68-91 kg</td>
-          </tr>
-          <tr>
-            <td className='p-3 border border-black'>Waist Width</td>
-            <td className='p-3 border border-black'>246mm</td>
-            <td className='p-3 border border-black'>255mm</td>
-          </tr>
-          <tr>
-            <td className='p-3 border border-black'>Stance Width</td>
-            <td className='p-3 border border-black'>-40</td>
-            <td className='p-3 border border-black'>-40</td>
-          </tr>
-          <tr>
-            <td className='p-3 border border-black'>Binding Sizes</td>
-            <td className='p-3 border border-black'>Men&rsquo;s S/M, Women&rsquo;s S/M</td>
-            <td className='p-3 border border-black'>Men&rsquo;s L, Women&rsquo;s L</td>
-          </tr>
-        </tbody>
-      </table>
-    </>
-  );
-};
+import SizeChart from './SizeChart.client';
+import AddToCartMarkup from './AddToCartMarkup.client';
 
 const ProductDetails = ({ product }) => {
   const initialVariant = flattenConnection(product.variants)[0];

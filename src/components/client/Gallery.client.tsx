@@ -45,14 +45,11 @@ const Gallery = () => {
 
         return (
           <MediaFile
-            tabIndex='0'
             key={med.id || med.image.id}
+            tabIndex='0'
             className='w-[80vw] md:w-auto h-full md:h-auto object-cover object-center transition-all snap-start border border-gray-200 flex-shrink-0 rounded-lg'
             data={med}
-            options={{
-              height: '485',
-              crop: 'center'
-            }}
+            options={{ crop: 'center', height: '485' }}
             {...extraProps}
           />
         );

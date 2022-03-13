@@ -1,6 +1,5 @@
 import { useCart } from '@shopify/hydrogen/client';
-
-import CartIcon from '../CartIcon';
+import CartIcon from '../svgs/CartIcon';
 
 // A client component that specifies the icon to use if a cart contains merchandise
 const CartIconWithItems = () => {

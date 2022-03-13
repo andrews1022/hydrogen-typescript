@@ -1,5 +1,5 @@
-import CartIcon from './CartIcon';
-import OpenIcon from './OpenIcon';
+import CartIcon from './svgs/CartIcon';
+import OpenIcon from './svgs/OpenIcon';
 
 // A shared component and Suspense call that's used in `App.server.jsx` to let your app wait for code to load while declaring a loading state
 const LoadingFallback = () => {

@@ -5,7 +5,7 @@ import CartToggle from './CartToggle.client';
 import { useCartUI } from './CartUIProvider.client';
 import CountrySelector from './CountrySelector.client';
 import Navigation from './Navigation.client';
-import MobileNavigation from '../client/MobileNavigation.client';
+import MobileNavigation from './MobileNavigation.client';
 
 // A client component that specifies the content of the header on the website
 const Header = ({ collections, storeName }) => {
@@ -48,7 +48,7 @@ const Header = ({ collections, storeName }) => {
               }}
             />
           </div>
-          <Navigation collections={collections} storeName={storeName} />
+          <Navigation collections={collections} />
         </div>
       </div>
     </header>
