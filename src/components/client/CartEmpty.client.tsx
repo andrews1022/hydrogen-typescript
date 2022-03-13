@@ -1,4 +1,4 @@
-import { BUTTON_PRIMARY_CLASSES } from './Button.client';
+import { BUTTON_PRIMARY_CLASSES } from '../../constants/button';
 import { useCartUI } from './CartUIProvider.client';
 
 const CartEmpty = () => {

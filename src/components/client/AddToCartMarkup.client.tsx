@@ -1,5 +1,5 @@
 import { AddToCartButton, BuyNowButton, useProduct } from '@shopify/hydrogen/client';
-import { BUTTON_PRIMARY_CLASSES, BUTTON_SECONDARY_CLASSES } from './Button.client';
+import { BUTTON_PRIMARY_CLASSES, BUTTON_SECONDARY_CLASSES } from '../../constants/button';
 
 const AddToCartMarkup = () => {
   const { selectedVariant } = useProduct();

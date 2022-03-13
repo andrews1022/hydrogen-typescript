@@ -1,5 +1,5 @@
 import { CartCheckoutButton, CartEstimatedCost, CartShopPayButton } from '@shopify/hydrogen/client';
-import { BUTTON_PRIMARY_CLASSES } from './Button.client';
+import { BUTTON_PRIMARY_CLASSES } from '../../constants/button';
 
 const CartFooter = () => {
   return (
