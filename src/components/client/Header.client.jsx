@@ -7,10 +7,8 @@ import CountrySelector from './CountrySelector.client';
 import Navigation from './Navigation.client';
 import MobileNavigation from '../client/MobileNavigation.client';
 
-/**
- * A client component that specifies the content of the header on the website
- */
-export default function Header({ collections, storeName }) {
+// A client component that specifies the content of the header on the website
+const Header = ({ collections, storeName }) => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const { isCartOpen } = useCartUI();
@@ -55,4 +53,6 @@ export default function Header({ collections, storeName }) {
       </div>
     </header>
   );
-}
+};
+
+export default Header;

@@ -2,10 +2,8 @@ import { useCart } from '@shopify/hydrogen/client';
 
 import CartIcon from '../CartIcon';
 
-/**
- * A client component that specifies the icon to use if a cart contains merchandise
- */
-export default function CartIconWithItems() {
+// A client component that specifies the icon to use if a cart contains merchandise
+const CartIconWithItems = () => {
   const { totalQuantity } = useCart();
 
   return (
@@ -25,4 +23,6 @@ export default function CartIconWithItems() {
       <span className='sr-only'>Cart, {totalQuantity} items</span>
     </>
   );
-}
+};
+
+export default CartIconWithItems;

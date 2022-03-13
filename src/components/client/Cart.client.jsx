@@ -18,58 +18,24 @@ import { useCartUI } from '../client/CartUIProvider.client';
 import CartIconWithItems from '../client/CartIconWithItems.client';
 import { BUTTON_PRIMARY_CLASSES } from './Button.client';
 
-/**
- * A client component that contains the merchandise that a customer intends to purchase, and the estimated cost associated with the cart
- */
-export default function Cart() {
-  const { isCartOpen, closeCart } = useCartUI();
-  const { totalQuantity } = useCart();
-
-  return (
-    <div>
-      <div
-        className={`z-20 fixed top-0 bottom-0 left-0 right-0 bg-black transition-opacity duration-400 ${
-          isCartOpen ? 'opacity-20' : 'opacity-0 pointer-events-none'
-        }`}
-        onClick={isCartOpen ? closeCart : null}
-      />
-      <Dialog open={isCartOpen} onClose={closeCart}>
-        <Dialog.Overlay className='fixed z-20 inset-0 bg-gray-50 opacity-75' />
-        <div
-          className={`absolute flex flex-col md:block z-20 top-0 left-0 right-0 bottom-0 md:top-7 h-full md:left-auto md:right-7 md:bottom-auto md:h-auto md:max-h-[calc(100vh-56px)] bg-gray-50 w-full md:w-[470px] rounded-b-lg shadow-2xl ${
-            totalQuantity === 0 ? 'overflow-hidden' : 'overflow-y-scroll'
-          }`}
-        >
-          <CartHeader />
-          {totalQuantity === 0 ? (
-            <CartEmpty />
-          ) : (
-            <>
-              <CartItems />
-              <CartFooter />
-            </>
-          )}
-        </div>
-      </Dialog>
-    </div>
-  );
-}
-
-function CartHeader() {
+const CartHeader = () => {
   const { closeCart } = useCartUI();
+
   return (
     <header className='border-b border-gray-300 bg-white py-3 px-6 flex justify-between items-center sticky top-0'>
       <button type='button' onClick={closeCart}>
         <ArrowIcon />
         <span className='sr-only'>Close cart</span>
       </button>
+
       <span className='text-xs text-gray-500'>Free shipping on orders over $50</span>
+
       <CartIconWithItems />
     </header>
   );
-}
+};
 
-function CartItems() {
+const CartItems = () => {
   return (
     <div className='px-7 flex-grow' role='table' aria-label='Shopping cart'>
       <div role='row' className='sr-only'>
@@ -82,9 +48,9 @@ function CartItems() {
       </CartLines>
     </div>
   );
-}
+};
 
-function LineInCart() {
+const LineInCart = () => {
   const { merchandise } = useCartLine();
   return (
     <div role='row' className='flex py-7 border-b last:border-b-0 border-gray-300 text-gray-900'>
@@ -135,9 +101,9 @@ function LineInCart() {
       </div>
     </div>
   );
-}
+};
 
-function CartItemQuantity() {
+const CartItemQuantity = () => {
   return (
     <div className='flex border rounded border-gray-300 items-center overflow-auto mt-2'>
       <CartLineQuantityAdjustButton
@@ -179,9 +145,9 @@ function CartItemQuantity() {
       </CartLineQuantityAdjustButton>
     </div>
   );
-}
+};
 
-function CartFooter() {
+const CartFooter = () => {
   return (
     <footer className='bottom-0 sticky pb-8 border-t border-black border-opacity-5'>
       <div className='relative h-60 bg-white text-gray-900 p-7'>
@@ -206,10 +172,11 @@ function CartFooter() {
       </div>
     </footer>
   );
-}
+};
 
-function CartEmpty() {
+const CartEmpty = () => {
   const { closeCart } = useCartUI();
+
   return (
     <div className='p-7 flex flex-col'>
       <p className='mb-4 text-lg text-gray-500 text-center'>Your cart is empty</p>
@@ -218,9 +185,9 @@ function CartEmpty() {
       </button>
     </div>
   );
-}
+};
 
-function ArrowIcon() {
+const ArrowIcon = () => {
   return (
     <svg width='20' height='17' viewBox='0 0 20 17' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <path
@@ -232,4 +199,41 @@ function ArrowIcon() {
       />
     </svg>
   );
-}
+};
+
+// A client component that contains the merchandise that a customer intends to purchase, and the estimated cost associated with the cart
+const Cart = () => {
+  const { isCartOpen, closeCart } = useCartUI();
+  const { totalQuantity } = useCart();
+
+  return (
+    <div>
+      <div
+        className={`z-20 fixed top-0 bottom-0 left-0 right-0 bg-black transition-opacity duration-400 ${
+          isCartOpen ? 'opacity-20' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={isCartOpen ? closeCart : null}
+      />
+      <Dialog open={isCartOpen} onClose={closeCart}>
+        <Dialog.Overlay className='fixed z-20 inset-0 bg-gray-50 opacity-75' />
+        <div
+          className={`absolute flex flex-col md:block z-20 top-0 left-0 right-0 bottom-0 md:top-7 h-full md:left-auto md:right-7 md:bottom-auto md:h-auto md:max-h-[calc(100vh-56px)] bg-gray-50 w-full md:w-[470px] rounded-b-lg shadow-2xl ${
+            totalQuantity === 0 ? 'overflow-hidden' : 'overflow-y-scroll'
+          }`}
+        >
+          <CartHeader />
+          {totalQuantity === 0 ? (
+            <CartEmpty />
+          ) : (
+            <>
+              <CartItems />
+              <CartFooter />
+            </>
+          )}
+        </div>
+      </Dialog>
+    </div>
+  );
+};
+
+export default Cart;

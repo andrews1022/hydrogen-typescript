@@ -11,11 +11,7 @@ import Layout from '../../components/server/Layout.server';
 import ProductCard from '../../components/ProductCard';
 import NotFound from '../../components/server/NotFound.server';
 
-export default function Collection({
-  country = { isoCode: 'US' },
-  collectionProductCount = 24,
-  params
-}) {
+const Collection = ({ country = { isoCode: 'US' }, collectionProductCount = 24, params }) => {
   const { handle } = params;
   const { data } = useShopQuery({
     query: QUERY,
@@ -54,7 +50,9 @@ export default function Collection({
       {hasNextPage && <LoadMoreProducts startingCount={collectionProductCount} />}
     </Layout>
   );
-}
+};
+
+export default Collection;
 
 const QUERY = gql`
   query CollectionDetails(

@@ -13,7 +13,7 @@ import ProductOptions from './ProductOptions.client';
 import Gallery from './Gallery.client';
 import { BUTTON_PRIMARY_CLASSES, BUTTON_SECONDARY_CLASSES } from './Button.client';
 
-function AddToCartMarkup() {
+const AddToCartMarkup = () => {
   const { selectedVariant } = useProduct();
   const isOutOfStock = !selectedVariant.availableForSale;
 
@@ -31,9 +31,9 @@ function AddToCartMarkup() {
       )}
     </div>
   );
-}
+};
 
-function SizeChart() {
+const SizeChart = () => {
   return (
     <>
       <h3 className='text-xl text-black font-semibold mt-8 mb-4' id='size-chart'>
@@ -72,9 +72,9 @@ function SizeChart() {
       </table>
     </>
   );
-}
+};
 
-export default function ProductDetails({ product }) {
+const ProductDetails = ({ product }) => {
   const initialVariant = flattenConnection(product.variants)[0];
 
   const productMetafields = useParsedMetafields(product.metafields);
@@ -196,4 +196,6 @@ export default function ProductDetails({ product }) {
       </ProductProvider>
     </>
   );
-}
+};
+
+export default ProductDetails;

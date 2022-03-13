@@ -1,10 +1,8 @@
 import { useCartUI } from '../client/CartUIProvider.client';
 import CartIconWithItems from './CartIconWithItems.client';
 
-/**
- * A client component that defines the behavior when a user toggles a cart
- */
-export default function CartToggle({ handleClick }) {
+// A client component that defines the behavior when a user toggles a cart
+const CartToggle = ({ handleClick }) => {
   const cartUI = useCartUI();
 
   if (cartUI == null) {
@@ -15,16 +13,18 @@ export default function CartToggle({ handleClick }) {
 
   return (
     <button
-      type='button'
-      aria-expanded={isCartOpen}
       aria-controls='cart'
+      aria-expanded={isCartOpen}
       onClick={() => {
         toggleCart();
         handleClick();
       }}
+      type='button'
     >
       <CartIconWithItems />
       <span className='sr-only'>Open cart</span>
     </button>
   );
-}
+};
+
+export default CartToggle;

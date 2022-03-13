@@ -2,10 +2,8 @@ import React, { useState, useMemo, useCallback, useContext, createContext } from
 
 export const CartContext = createContext(null);
 
-/**
- * A client component that defines the behavior that occurs when a user is interacting with a cart (for example, opening or closing it)
- */
-export default function CartUIProvider({ children }) {
+// A client component that defines the behavior that occurs when a user is interacting with a cart (for example, opening or closing it)
+const CartUIProvider = ({ children }) => {
   const [open, setOpen] = useState(false);
 
   const openCart = useCallback(() => {
@@ -30,8 +28,10 @@ export default function CartUIProvider({ children }) {
   }, [open, openCart, closeCart, toggleCart]);
 
   return <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>;
-}
+};
 
-export function useCartUI() {
+export default CartUIProvider;
+
+export const useCartUI = () => {
   return useContext(CartContext);
-}
+};

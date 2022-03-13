@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import Layout from '../../components/server/Layout.server';
 import NotFound from '../../components/server/NotFound.server';
 
-export default function Page({ params }) {
+const Page = ({ params }) => {
   const { handle } = params;
   const { data } = useShopQuery({ query: QUERY, variables: { handle } });
 
@@ -22,7 +22,9 @@ export default function Page({ params }) {
       <RawHtml string={page.body} className='prose mt-8' />
     </Layout>
   );
-}
+};
+
+export default Page;
 
 const QUERY = gql`
   query PageDetails($handle: String!) {

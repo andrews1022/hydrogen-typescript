@@ -6,7 +6,7 @@ import ProductDetails from '../../components/client/ProductDetails.client';
 import NotFound from '../../components/server/NotFound.server';
 import Layout from '../../components/server/Layout.server';
 
-export default function Product({ country = { isoCode: 'US' }, params }) {
+const Product = ({ country = { isoCode: 'US' }, params }) => {
   const { handle } = params;
 
   const {
@@ -30,7 +30,9 @@ export default function Product({ country = { isoCode: 'US' }, params }) {
       <ProductDetails product={product} />
     </Layout>
   );
-}
+};
+
+export default Product;
 
 const QUERY = gql`
   query product(

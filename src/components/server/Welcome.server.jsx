@@ -2,7 +2,7 @@ import { useShopQuery, flattenConnection, Link } from '@shopify/hydrogen';
 import gql from 'graphql-tag';
 import { Suspense } from 'react';
 
-function ExternalIcon() {
+const ExternalIcon = () => {
   return (
     <svg
       className='ml-3'
@@ -16,9 +16,9 @@ function ExternalIcon() {
       <path d='M2.11963 2.00098C1.01506 2.00098 0.119629 2.89641 0.119629 4.00098V12.001C0.119629 13.1055 1.01506 14.001 2.11963 14.001H10.1196C11.2242 14.001 12.1196 13.1055 12.1196 12.001V9.00098C12.1196 8.44869 11.6719 8.00098 11.1196 8.00098C10.5673 8.00098 10.1196 8.44869 10.1196 9.00098V12.001H2.11963V4.00098L5.11963 4.00098C5.67191 4.00098 6.11963 3.55326 6.11963 3.00098C6.11963 2.44869 5.67191 2.00098 5.11963 2.00098H2.11963Z' />
     </svg>
   );
-}
+};
 
-function DocsButton({ url, label }) {
+const DocsButton = ({ url, label }) => {
   return (
     <a
       href={url}
@@ -30,13 +30,13 @@ function DocsButton({ url, label }) {
       <ExternalIcon />
     </a>
   );
-}
+};
 
-function BoxFallback() {
+const BoxFallback = () => {
   return <div className='bg-white p-12 shadow-xl rounded-xl text-gray-900 h-60'></div>;
-}
+};
 
-function StorefrontInfo() {
+const StorefrontInfo = () => {
   const { data } = useShopQuery({ query: QUERY, preload: true });
   const shopName = data ? data.shop.name : '';
   const products = data && flattenConnection(data.products);
@@ -80,9 +80,9 @@ function StorefrontInfo() {
       </a>
     </div>
   );
-}
+};
 
-function TemplateLinks() {
+const TemplateLinks = () => {
   const { data } = useShopQuery({ query: QUERY, preload: true });
   const products = data && flattenConnection(data.products);
   const collections = data && flattenConnection(data.collections);
@@ -118,12 +118,10 @@ function TemplateLinks() {
       </ul>
     </div>
   );
-}
+};
 
-/**
- * A server component that displays the content on the homepage of the Hydrogen app
- */
-export default function Welcome() {
+// A server component that displays the content on the homepage of the Hydrogen app
+const Welcome = () => {
   return (
     <div className='text-gray-900 pt-16 rounded-[40px] my-16 px-4 xl:px-12 bg-gradient-to-b from-white -mx-4 xl:-mx-12'>
       <div className='text-center mb-16'>
@@ -151,7 +149,9 @@ export default function Welcome() {
       </div>
     </div>
   );
-}
+};
+
+export default Welcome;
 
 const QUERY = gql`
   query welcomeContent {

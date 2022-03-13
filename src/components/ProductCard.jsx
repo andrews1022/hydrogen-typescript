@@ -3,10 +3,8 @@ import { Image, Link } from '@shopify/hydrogen';
 import MoneyCompareAtPrice from './client/MoneyCompareAtPrice.client';
 import MoneyPrice from './client/MoneyPrice.client';
 
-/**
- * A shared component that displays a single product to allow buyers to quickly identify a particular item of interest
- */
-export default function ProductCard({ product }) {
+// A shared component that displays a single product to allow buyers to quickly identify a particular item of interest
+const ProductCard = ({ product }) => {
   const selectedVariant = product.variants.edges[0].node;
 
   if (selectedVariant == null) {
@@ -45,4 +43,6 @@ export default function ProductCard({ product }) {
       </Link>
     </div>
   );
-}
+};
+
+export default ProductCard;

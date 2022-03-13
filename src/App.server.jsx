@@ -7,7 +7,7 @@ import NotFound from './components/server/NotFound.server';
 import LoadingFallback from './components/LoadingFallback';
 import CartProvider from './components/client/CartProvider.client';
 
-function App({ routes, ...serverProps }) {
+const App = ({ routes, ...serverProps }) => {
   return (
     <Suspense fallback={<LoadingFallback />}>
       <ShopifyProvider shopifyConfig={shopifyConfig}>
@@ -20,7 +20,7 @@ function App({ routes, ...serverProps }) {
       </ShopifyProvider>
     </Suspense>
   );
-}
+};
 
 const routes = import.meta.globEager('./routes/**/*.server.[jt](s|sx)');
 

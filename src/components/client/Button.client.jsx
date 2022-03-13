@@ -24,17 +24,8 @@ const ExternalIcon = () => (
   </svg>
 );
 
-/**
- * A client component that sets the primary and secondary classes for button components
- */
-export default function Button({
-  className,
-  label,
-  handleClick,
-  url,
-  variant = 'primary',
-  passthroughProps
-}) {
+// A client component that sets the primary and secondary classes for button components
+const Button = ({ className, label, handleClick, url, variant = 'primary', passthroughProps }) => {
   const classes = `${DEFAULT_CLASSES} ${VARIANT_CLASSES[variant]} ${className}`;
   const isExternal = url ? url.indexOf('://') > 0 || url.indexOf('//') === 0 : false;
 
@@ -60,4 +51,6 @@ export default function Button({
       {label}
     </Link>
   );
-}
+};
+
+export default Button;

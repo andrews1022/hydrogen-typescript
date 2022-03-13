@@ -4,10 +4,8 @@ import { Listbox } from '@headlessui/react';
 
 import { ArrowIcon, CheckIcon } from './CountrySelector.client';
 
-/**
- * A client component that selects the appropriate country to display for products on a mobile storefront
- */
-export default function MobileCountrySelector() {
+// A client component that selects the appropriate country to display for products on a mobile storefront
+const MobileCountrySelector = () => {
   const countries = [...useAvailableCountries()].sort((a, b) => a.name.localeCompare(b.name));
   const [selectedCountry, setSelectedCountry] = useCountry();
 
@@ -54,4 +52,6 @@ export default function MobileCountrySelector() {
       </Listbox>
     </div>
   );
-}
+};
+
+export default MobileCountrySelector;

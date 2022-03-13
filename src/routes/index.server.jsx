@@ -12,26 +12,7 @@ import ProductCard from '../components/ProductCard';
 import Welcome from '../components/server/Welcome.server';
 import { Suspense } from 'react';
 
-export default function Index({ country = { isoCode: 'US' } }) {
-  return (
-    <Layout hero={<GradientBackground />}>
-      <Suspense fallback={null}>
-        <SeoForHomepage />
-      </Suspense>
-      <div className='relative mb-12'>
-        <Welcome />
-        <Suspense fallback={<BoxFallback />}>
-          <FeaturedProductsBox country={country} />
-        </Suspense>
-        <Suspense fallback={<BoxFallback />}>
-          <FeaturedCollectionBox country={country} />
-        </Suspense>
-      </div>
-    </Layout>
-  );
-}
-
-function SeoForHomepage() {
+const SeoForHomepage = () => {
   const {
     data: {
       shop: { title, description }
@@ -51,13 +32,13 @@ function SeoForHomepage() {
       }}
     />
   );
-}
+};
 
-function BoxFallback() {
+const BoxFallback = () => {
   return <div className='bg-white p-12 shadow-xl rounded-xl mb-10 h-40'></div>;
-}
+};
 
-function FeaturedProductsBox({ country }) {
+const FeaturedProductsBox = ({ country }) => {
   const { data } = useShopQuery({
     query: QUERY,
     variables: {
@@ -106,9 +87,9 @@ function FeaturedProductsBox({ country }) {
       ) : null}
     </div>
   );
-}
+};
 
-function FeaturedCollectionBox({ country }) {
+const FeaturedCollectionBox = ({ country }) => {
   const { data } = useShopQuery({
     query: QUERY,
     variables: {
@@ -122,9 +103,9 @@ function FeaturedCollectionBox({ country }) {
     collections && collections.length > 1 ? collections[1] : collections[0];
 
   return <FeaturedCollection collection={featuredCollection} />;
-}
+};
 
-function GradientBackground() {
+const GradientBackground = () => {
   return (
     <div className='fixed top-0 w-full h-3/5 overflow-hidden'>
       <div className='absolute w-full h-full bg-gradient-to-t from-gray-50 z-10' />
@@ -177,7 +158,28 @@ function GradientBackground() {
       </svg>
     </div>
   );
-}
+};
+
+const Index = ({ country = { isoCode: 'US' } }) => {
+  return (
+    <Layout hero={<GradientBackground />}>
+      <Suspense fallback={null}>
+        <SeoForHomepage />
+      </Suspense>
+      <div className='relative mb-12'>
+        <Welcome />
+        <Suspense fallback={<BoxFallback />}>
+          <FeaturedProductsBox country={country} />
+        </Suspense>
+        <Suspense fallback={<BoxFallback />}>
+          <FeaturedCollectionBox country={country} />
+        </Suspense>
+      </div>
+    </Layout>
+  );
+};
+
+export default Index;
 
 const SEO_QUERY = gql`
   query homeShopInfo {

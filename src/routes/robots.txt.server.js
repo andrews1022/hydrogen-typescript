@@ -1,19 +1,19 @@
-/**
- * This API endpoint generates a robots.txt file. Use this to control
- * access to your resources from SEO crawlers.
- * Learn more: https://developers.google.com/search/docs/advanced/robots/create-robots-txt
- */
+// This API endpoint generates a robots.txt file
+// Use this to control access to your resources from SEO crawlers.
+// Learn more: https://developers.google.com/search/docs/advanced/robots/create-robots-txt
 
-export default function RobotsTxt({request, response}) {
+const RobotsTxt = ({ request, response }) => {
   response.doNotStream();
   response.headers.set('content-type', 'text/plain');
 
   const url = new URL(request.url);
 
-  return response.send(robotsTxtData({url: url.origin}));
-}
+  return response.send(robotsTxtData({ url: url.origin }));
+};
 
-function robotsTxtData({url}) {
+export default RobotsTxt;
+
+const robotsTxtData = ({ url }) => {
   const sitemapUrl = url ? `${url}/sitemap.xml` : undefined;
 
   return `
@@ -37,4 +37,4 @@ Disallow: /orders
 User-agent: Pinterest
 Crawl-delay: 1
 `;
-}
+};

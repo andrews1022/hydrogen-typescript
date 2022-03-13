@@ -12,10 +12,8 @@ import Footer from './Footer.server';
 import Cart from '../client/Cart.client';
 import { Suspense } from 'react';
 
-/**
- * A server component that defines a structure and organization of a page that can be used in different parts of the Hydrogen app
- */
-export default function Layout({ children, hero }) {
+// A server component that defines a structure and organization of a page that can be used in different parts of the Hydrogen app
+const Layout = ({ children, hero }) => {
   const { data } = useShopQuery({
     query: QUERY,
     variables: {
@@ -49,7 +47,9 @@ export default function Layout({ children, hero }) {
       </div>
     </LocalizationProvider>
   );
-}
+};
+
+export default Layout;
 
 const QUERY = gql`
   query layoutContent($numCollections: Int!) {
