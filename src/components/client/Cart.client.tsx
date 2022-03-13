@@ -1,11 +1,12 @@
 import { useCart } from '@shopify/hydrogen/client';
 import { Dialog } from '@headlessui/react';
+import React from 'react';
 
-import { useCartUI } from './CartUIProvider.client';
 import CartEmpty from './CartEmpty.client';
 import CartFooter from './CartFooter.client';
 import CartHeader from './CartHeader.client';
 import CartItems from './CartItems.client';
+import useCartUI from '../../hooks/useCartUI';
 
 // A client component that contains the merchandise that a customer intends to purchase, and the estimated cost associated with the cart
 const Cart = () => {

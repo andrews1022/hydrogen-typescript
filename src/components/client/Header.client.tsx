@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from '@shopify/hydrogen/client';
-
+import React from 'react';
 import CartToggle from './CartToggle.client';
-import { useCartUI } from './CartUIProvider.client';
 import CountrySelector from './CountrySelector.client';
 import Navigation from './Navigation.client';
 import MobileNavigation from './MobileNavigation.client';
+import useCartUI from '../../hooks/useCartUI';
 
 // A client component that specifies the content of the header on the website
 const Header = ({ collections, storeName }) => {

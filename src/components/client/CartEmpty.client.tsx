@@ -1,5 +1,6 @@
+import React from 'react';
 import { BUTTON_PRIMARY_CLASSES } from '../../constants/button';
-import { useCartUI } from './CartUIProvider.client';
+import useCartUI from '../../hooks/useCartUI';
 
 const CartEmpty = () => {
   const { closeCart } = useCartUI();

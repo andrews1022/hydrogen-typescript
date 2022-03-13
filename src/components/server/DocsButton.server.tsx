@@ -1,3 +1,4 @@
+import React from 'react';
 import ExternalIcon from '../svgs/ExternalIcon';
 
 type DocsButtonProps = {

@@ -1,3 +1,4 @@
+import React from 'react';
 import { CartLines } from '@shopify/hydrogen/client';
 import LineInCart from './LineInCart.client';
 

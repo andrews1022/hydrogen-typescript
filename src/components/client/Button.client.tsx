@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from '@shopify/hydrogen/client';
 import { DEFAULT_CLASSES, VARIANT_CLASSES } from '../../constants/button';
 import ExternalIcon from '../svgs/ExternalIcon';

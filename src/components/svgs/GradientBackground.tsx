@@ -1,3 +1,5 @@
+import React from 'react';
+
 const GradientBackground = () => {
   return (
     <div className='fixed top-0 w-full h-3/5 overflow-hidden'>

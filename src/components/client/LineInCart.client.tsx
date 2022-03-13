@@ -6,10 +6,12 @@ import {
   Link,
   useCartLine
 } from '@shopify/hydrogen/client';
+import React from 'react';
 import CartItemQuantity from './CartItemQuantity.client';
 
 const LineInCart = () => {
   const { merchandise } = useCartLine();
+
   return (
     <div role='row' className='flex py-7 border-b last:border-b-0 border-gray-300 text-gray-900'>
       <div role='cell' className='flex-shrink-0 mr-7'>

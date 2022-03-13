@@ -1,6 +1,7 @@
+import React from 'react';
+import useCartUI from '../../hooks/useCartUI';
 import ArrowIcon from '../svgs/ArrowIcon';
 import CartIconWithItems from './CartIconWithItems.client';
-import { useCartUI } from './CartUIProvider.client';
 
 const CartHeader = () => {
   const { closeCart } = useCartUI();

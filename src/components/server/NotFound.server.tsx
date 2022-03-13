@@ -1,10 +1,15 @@
 import { useShopQuery, flattenConnection } from '@shopify/hydrogen';
 import { ProductProviderFragment } from '@shopify/hydrogen/fragments';
 import gql from 'graphql-tag';
+import React from 'react';
 
 import Layout from './Layout.server';
 import Button from '../client/Button.client';
 import ProductCard from '../ProductCard';
+
+type NotFoundProps = {
+  country?: { isoCode: string };
+};
 
 // A server component that defines the content to display when a page isn't found (404 error)
 const NotFound = ({ country = { isoCode: 'US' }, response }) => {
@@ -24,6 +29,9 @@ const NotFound = ({ country = { isoCode: 'US' }, response }) => {
       numProductSellingPlans: 0
     }
   });
+
+  console.log('DATA: ', data);
+
   const products = data ? flattenConnection(data.products) : [];
 
   return (

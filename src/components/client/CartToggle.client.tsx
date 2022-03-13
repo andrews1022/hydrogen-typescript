@@ -1,4 +1,5 @@
-import { useCartUI } from './CartUIProvider.client';
+import React from 'react';
+import useCartUI from '../../hooks/useCartUI';
 import CartIconWithItems from './CartIconWithItems.client';
 
 // A client component that defines the behavior when a user toggles a cart

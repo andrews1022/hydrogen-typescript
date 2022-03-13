@@ -1,3 +1,5 @@
+import React from 'react';
+
 // A shared component that specifies the icon to render when opened
 const OpenIcon = () => {
   return (
