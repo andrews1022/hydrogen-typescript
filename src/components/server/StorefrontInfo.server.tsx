@@ -1,16 +1,57 @@
+import React from 'react';
 import { flattenConnection, useShopQuery } from '@shopify/hydrogen';
+import type { Collection, Product, Shop } from '@shopify/hydrogen/dist/esnext/graphql/types/types';
 import gql from 'graphql-tag';
+
+// svg components
 import ExternalIcon from '../svgs/ExternalIcon';
 
+const QUERY = gql`
+  query welcomeContent {
+    shop {
+      name
+    }
+    products(first: 250) {
+      edges {
+        node {
+          handle
+        }
+      }
+    }
+    collections(first: 250) {
+      edges {
+        node {
+          handle
+        }
+      }
+    }
+  }
+`;
+
+// query
+type StorefrontInfoQueryResponse = {
+  collections: {
+    edges: {
+      node: Collection;
+    }[];
+  };
+  products: {
+    edges: {
+      node: Product;
+    }[];
+  };
+  shop: Shop;
+};
+
 const StorefrontInfo = () => {
-  const { data } = useShopQuery({ query: QUERY, preload: true });
+  const { data } = useShopQuery<StorefrontInfoQueryResponse>({ preload: true, query: QUERY });
   const shopName = data ? data.shop.name : '';
   const products = data && flattenConnection(data.products);
   const collections = data && flattenConnection(data.collections);
   const totalProducts = products && products.length;
   const totalCollections = collections && collections.length;
 
-  const pluralize = (count, noun, suffix = 's') => `${count} ${noun}${count === 1 ? '' : suffix}`;
+  const pluralize = (count: number, noun: string) => `${count} ${noun}${count === 1 ? '' : 's'}`;
 
   return (
     <div className='bg-white p-12 shadow-xl rounded-xl text-gray-900'>
@@ -55,25 +96,3 @@ const StorefrontInfo = () => {
 };
 
 export default StorefrontInfo;
-
-const QUERY = gql`
-  query welcomeContent {
-    shop {
-      name
-    }
-    products(first: 250) {
-      edges {
-        node {
-          handle
-        }
-      }
-    }
-    collections(first: 250) {
-      edges {
-        node {
-          handle
-        }
-      }
-    }
-  }
-`;

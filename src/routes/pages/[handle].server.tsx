@@ -1,7 +1,9 @@
+import React from 'react';
 import { useShopQuery, RawHtml, Seo } from '@shopify/hydrogen';
 import { PageSeoFragment } from '@shopify/hydrogen/fragments';
 import gql from 'graphql-tag';
 
+// server components
 import Layout from '../../components/server/Layout.server';
 import NotFound from '../../components/server/NotFound.server';
 

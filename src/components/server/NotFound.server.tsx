@@ -1,14 +1,49 @@
+import React from 'react';
 import { useShopQuery, flattenConnection } from '@shopify/hydrogen';
 import { ProductProviderFragment } from '@shopify/hydrogen/fragments';
+import type { Product } from '@shopify/hydrogen/dist/esnext/graphql/types/types';
 import gql from 'graphql-tag';
-import React from 'react';
 
-import Layout from './Layout.server';
+// client components
 import Button from '../client/Button.client';
+
+// server components
+import Layout from './Layout.server';
 import ProductCard from './ProductCard.server';
 
+const QUERY = gql`
+  query NotFoundProductDetails(
+    $country: CountryCode
+    $includeReferenceMetafieldDetails: Boolean = false
+    $numProductMetafields: Int!
+    $numProductVariants: Int!
+    $numProductMedia: Int!
+    $numProductVariantMetafields: Int!
+    $numProductVariantSellingPlanAllocations: Int!
+    $numProductSellingPlanGroups: Int!
+    $numProductSellingPlans: Int!
+  ) @inContext(country: $country) {
+    products(first: 3) {
+      edges {
+        node {
+          ...ProductProviderFragment
+        }
+      }
+    }
+  }
+
+  ${ProductProviderFragment}
+`;
+
+type NotFoundQueryResponse = {
+  products: { edges: { node: Product }[] };
+};
+
+// props
 type NotFoundProps = {
   country?: { isoCode: string };
+  response?: any;
+  serverProps?: any;
 };
 
 // A server component that defines the content to display when a page isn't found (404 error)
@@ -16,7 +51,7 @@ const NotFound = ({ country = { isoCode: 'US' }, response }) => {
   response.doNotStream();
   response.writeHead({ status: 404, statusText: 'Not found' });
 
-  const { data } = useShopQuery({
+  const { data } = useShopQuery<NotFoundQueryResponse>({
     query: QUERY,
     variables: {
       country: country.isoCode,
@@ -62,27 +97,3 @@ const NotFound = ({ country = { isoCode: 'US' }, response }) => {
 };
 
 export default NotFound;
-
-const QUERY = gql`
-  query NotFoundProductDetails(
-    $country: CountryCode
-    $includeReferenceMetafieldDetails: Boolean = false
-    $numProductMetafields: Int!
-    $numProductVariants: Int!
-    $numProductMedia: Int!
-    $numProductVariantMetafields: Int!
-    $numProductVariantSellingPlanAllocations: Int!
-    $numProductSellingPlanGroups: Int!
-    $numProductSellingPlans: Int!
-  ) @inContext(country: $country) {
-    products(first: 3) {
-      edges {
-        node {
-          ...ProductProviderFragment
-        }
-      }
-    }
-  }
-
-  ${ProductProviderFragment}
-`;

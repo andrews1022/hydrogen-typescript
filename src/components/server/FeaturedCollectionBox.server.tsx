@@ -1,33 +1,11 @@
 import React from 'react';
 import { flattenConnection, useShopQuery } from '@shopify/hydrogen';
 import { ImageFragment, ProductProviderFragment } from '@shopify/hydrogen/fragments';
+import type { Collection } from '@shopify/hydrogen/dist/esnext/graphql/types/types';
 import gql from 'graphql-tag';
 
 // components
 import FeaturedCollection from './FeaturedCollection.server';
-
-type FeaturedCollectionBoxProps = {
-  country: {
-    isoCode: string;
-  };
-};
-
-const FeaturedCollectionBox = ({ country }: FeaturedCollectionBoxProps) => {
-  const { data } = useShopQuery({
-    preload: true,
-    query: QUERY,
-    variables: {
-      country: country.isoCode
-    }
-  });
-
-  const collections = data ? flattenConnection(data.collections) : [];
-  const featuredCollection = collections && collections.length ? collections[1] : collections[0];
-
-  return <FeaturedCollection collection={featuredCollection} />;
-};
-
-export default FeaturedCollectionBox;
 
 const QUERY = gql`
   query indexContent(
@@ -69,3 +47,35 @@ const QUERY = gql`
   ${ProductProviderFragment}
   ${ImageFragment}
 `;
+
+// query
+type FeaturedCollectionBoxQueryResponse = {
+  collections: {
+    edges: {
+      node: Collection;
+    }[];
+  };
+};
+
+// props
+type FeaturedCollectionBoxProps = {
+  country: {
+    isoCode: string;
+  };
+};
+
+const FeaturedCollectionBox = ({ country }: FeaturedCollectionBoxProps) => {
+  // i think `{ data }: any` is only thing that works here?
+  const { data } = useShopQuery<FeaturedCollectionBoxQueryResponse>({
+    preload: true,
+    query: QUERY,
+    variables: { country: country.isoCode }
+  });
+
+  const collections = data ? flattenConnection(data.collections) : [];
+  const featuredCollection = collections && collections.length ? collections[1] : collections[0];
+
+  return <FeaturedCollection collection={featuredCollection as Collection} />;
+};
+
+export default FeaturedCollectionBox;

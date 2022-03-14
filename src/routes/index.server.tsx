@@ -18,26 +18,24 @@ type IndexProps = {
   };
 };
 
-const Index = ({ country = { isoCode: 'US' } }: IndexProps) => {
-  return (
-    <Layout hero={<GradientBackground />}>
-      <Suspense fallback={null}>
-        <SeoForHomepage />
+const Index = ({ country = { isoCode: 'US' } }: IndexProps) => (
+  <Layout hero={<GradientBackground />}>
+    <Suspense fallback={null}>
+      <SeoForHomepage />
+    </Suspense>
+
+    <div className='relative mb-12'>
+      <Welcome />
+
+      <Suspense fallback={<BoxFallback />}>
+        <FeaturedProductsBox country={country} />
       </Suspense>
 
-      <div className='relative mb-12'>
-        <Welcome />
-
-        <Suspense fallback={<BoxFallback />}>
-          <FeaturedProductsBox country={country} />
-        </Suspense>
-
-        <Suspense fallback={<BoxFallback />}>
-          <FeaturedCollectionBox country={country} />
-        </Suspense>
-      </div>
-    </Layout>
-  );
-};
+      <Suspense fallback={<BoxFallback />}>
+        <FeaturedCollectionBox country={country} />
+      </Suspense>
+    </div>
+  </Layout>
+);
 
 export default Index;

@@ -7,10 +7,13 @@ import {
 } from '@shopify/hydrogen/fragments';
 import gql from 'graphql-tag';
 
+// client components
 import LoadMoreProducts from '../../components/client/LoadMoreProducts.client';
+
+// server components
 import Layout from '../../components/server/Layout.server';
-import ProductCard from '../../components/server/ProductCard.server';
 import NotFound from '../../components/server/NotFound.server';
+import ProductCard from '../../components/server/ProductCard.server';
 
 const Collection = ({ country = { isoCode: 'US' }, collectionProductCount = 24, params }) => {
   const { handle } = params;

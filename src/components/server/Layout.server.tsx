@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import type { ReactNode } from 'react';
 import {
   useShopQuery,
   flattenConnection,
@@ -6,54 +7,15 @@ import {
   CacheHours
 } from '@shopify/hydrogen';
 import { ImageFragment } from '@shopify/hydrogen/fragments';
+import type { Collection, Product, Shop } from '@shopify/hydrogen/dist/esnext/graphql/types/types';
 import gql from 'graphql-tag';
 
-import Header from '../client/Header.client';
-import Footer from './Footer.server';
+// client components
 import Cart from '../client/Cart.client';
+import Header from '../client/Header.client';
 
-// A server component that defines a structure and organization
-//  of a page that can be used in different parts of the Hydrogen app
-const Layout = ({ children, hero }) => {
-  const { data } = useShopQuery({
-    query: QUERY,
-    variables: {
-      numCollections: 3
-    },
-    cache: CacheHours(),
-    preload: '*'
-  });
-  const collections = data ? flattenConnection(data.collections) : null;
-  const products = data ? flattenConnection(data.products) : null;
-  const storeName = data ? data.shop.name : '';
-
-  return (
-    <LocalizationProvider preload='*'>
-      <div className='absolute top-0 left-0'>
-        <a href='#mainContent' className='p-4 focus:block sr-only focus:not-sr-only'>
-          Skip to content
-        </a>
-      </div>
-
-      <div className='min-h-screen max-w-screen text-gray-700 font-sans'>
-        {/* TODO: Find out why Suspense needs to be here to prevent hydration errors. */}
-        <Suspense fallback={null}>
-          <Header collections={collections} storeName={storeName} />
-          <Cart />
-        </Suspense>
-
-        <main role='main' id='mainContent' className='relative bg-gray-50'>
-          {hero}
-          <div className='mx-auto max-w-7xl p-4 md:py-5 md:px-8'>{children}</div>
-        </main>
-
-        <Footer collection={collections[0]} product={products[0]} />
-      </div>
-    </LocalizationProvider>
-  );
-};
-
-export default Layout;
+// server components
+import Footer from './Footer.server';
 
 const QUERY = gql`
   query layoutContent($numCollections: Int!) {
@@ -83,3 +45,67 @@ const QUERY = gql`
   }
   ${ImageFragment}
 `;
+
+// query
+type LayoutQueryResponse = {
+  collections: {
+    edges: {
+      node: Collection;
+    }[];
+  };
+  products: {
+    edges: {
+      node: Product;
+    }[];
+  };
+  shop: Shop;
+};
+
+// props
+type LayoutProps = {
+  children: ReactNode;
+  hero?: ReactNode;
+};
+
+// A server component that defines a structure and organization
+//  of a page that can be used in different parts of the Hydrogen app
+const Layout = ({ children, hero }: LayoutProps) => {
+  const { data } = useShopQuery<LayoutQueryResponse>({
+    query: QUERY,
+    variables: {
+      numCollections: 3
+    },
+    cache: CacheHours(),
+    preload: '*'
+  });
+  const collections = data ? flattenConnection(data.collections) : null;
+  const products = data ? flattenConnection(data.products) : null;
+  const storeName = data ? data.shop.name : '';
+
+  return (
+    <LocalizationProvider preload='*'>
+      <div className='absolute top-0 left-0'>
+        <a href='#mainContent' className='p-4 focus:block sr-only focus:not-sr-only'>
+          Skip to content
+        </a>
+      </div>
+
+      <div className='min-h-screen max-w-screen text-gray-700 font-sans'>
+        {/* TODO: Find out why Suspense needs to be here to prevent hydration errors. */}
+        <Suspense fallback={null}>
+          <Header collections={collections!} storeName={storeName} />
+          <Cart />
+        </Suspense>
+
+        <main role='main' id='mainContent' className='relative bg-gray-50'>
+          {hero}
+          <div className='mx-auto max-w-7xl p-4 md:py-5 md:px-8'>{children}</div>
+        </main>
+
+        <Footer collection={collections![0]} product={products![0]} />
+      </div>
+    </LocalizationProvider>
+  );
+};
+
+export default Layout;

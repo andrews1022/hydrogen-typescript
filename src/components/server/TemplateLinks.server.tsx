@@ -1,8 +1,45 @@
+import React from 'react';
 import { flattenConnection, Link, useShopQuery } from '@shopify/hydrogen';
+import type { Collection, Product } from '@shopify/hydrogen/dist/esnext/graphql/types/types';
 import gql from 'graphql-tag';
 
+const QUERY = gql`
+  query welcomeContent {
+    shop {
+      name
+    }
+    products(first: 250) {
+      edges {
+        node {
+          handle
+        }
+      }
+    }
+    collections(first: 250) {
+      edges {
+        node {
+          handle
+        }
+      }
+    }
+  }
+`;
+
+type TemplateLinksQueryResponse = {
+  collections: {
+    edges: {
+      node: Collection;
+    }[];
+  };
+  products: {
+    edges: {
+      node: Product;
+    }[];
+  };
+};
+
 const TemplateLinks = () => {
-  const { data } = useShopQuery({ query: QUERY, preload: true });
+  const { data } = useShopQuery<TemplateLinksQueryResponse>({ preload: true, query: QUERY });
   const products = data && flattenConnection(data.products);
   const collections = data && flattenConnection(data.collections);
 
@@ -40,25 +77,3 @@ const TemplateLinks = () => {
 };
 
 export default TemplateLinks;
-
-const QUERY = gql`
-  query welcomeContent {
-    shop {
-      name
-    }
-    products(first: 250) {
-      edges {
-        node {
-          handle
-        }
-      }
-    }
-    collections(first: 250) {
-      edges {
-        node {
-          handle
-        }
-      }
-    }
-  }
-`;

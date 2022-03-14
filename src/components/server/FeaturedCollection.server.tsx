@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, Link } from '@shopify/hydrogen';
 import type { Collection } from '@shopify/hydrogen/dist/esnext/graphql/types/types';
 
+// props
 type FeaturedCollectionProps = {
   collection: Collection;
 };

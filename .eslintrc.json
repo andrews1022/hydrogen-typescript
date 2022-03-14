@@ -5,6 +5,7 @@
     "node": true
   },
   "extends": ["plugin:react/recommended", "airbnb"],
+  "globals": { "JSX": "readonly" },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
