@@ -1,3 +1,4 @@
+import React from 'react';
 import { useShopQuery, flattenConnection, RawHtml, Seo } from '@shopify/hydrogen';
 import {
   MediaFileFragment,
@@ -8,7 +9,7 @@ import gql from 'graphql-tag';
 
 import LoadMoreProducts from '../../components/client/LoadMoreProducts.client';
 import Layout from '../../components/server/Layout.server';
-import ProductCard from '../../components/ProductCard';
+import ProductCard from '../../components/server/ProductCard.server';
 import NotFound from '../../components/server/NotFound.server';
 
 const Collection = ({ country = { isoCode: 'US' }, collectionProductCount = 24, params }) => {
@@ -27,9 +28,9 @@ const Collection = ({ country = { isoCode: 'US' }, collectionProductCount = 24, 
     return <NotFound />;
   }
 
-  const collection = data.collection;
+  const { collection } = data;
   const products = flattenConnection(collection.products);
-  const hasNextPage = data.collection.products.pageInfo.hasNextPage;
+  const { hasNextPage } = data.collection.products.pageInfo;
 
   return (
     <Layout>

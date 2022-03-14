@@ -1,10 +1,17 @@
+import React from 'react';
 import { Image, Link } from '@shopify/hydrogen';
+import type { Product } from '@shopify/hydrogen/dist/esnext/graphql/types/types';
 
-import MoneyCompareAtPrice from './client/MoneyCompareAtPrice.client';
-import MoneyPrice from './client/MoneyPrice.client';
+import MoneyCompareAtPrice from '../client/MoneyCompareAtPrice.client';
+import MoneyPrice from '../client/MoneyPrice.client';
 
-// A shared component that displays a single product to allow buyers to quickly identify a particular item of interest
-const ProductCard = ({ product }) => {
+type ProductCardProps = {
+  product: Product;
+};
+
+// A shared component that displays a single product to allow
+// buyers to quickly identify a particular item of interest
+const ProductCard = ({ product }: ProductCardProps) => {
   const selectedVariant = product.variants.edges[0].node;
 
   if (selectedVariant == null) {

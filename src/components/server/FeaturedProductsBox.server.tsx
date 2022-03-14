@@ -1,7 +1,8 @@
+import React from 'react';
 import { flattenConnection, Link, useShopQuery } from '@shopify/hydrogen';
 import { ImageFragment, ProductProviderFragment } from '@shopify/hydrogen/fragments';
 import gql from 'graphql-tag';
-import ProductCard from '../ProductCard';
+import ProductCard from './ProductCard.server';
 
 const FeaturedProductsBox = ({ country }) => {
   const { data } = useShopQuery({

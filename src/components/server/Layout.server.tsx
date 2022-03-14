@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import {
   useShopQuery,
   flattenConnection,
@@ -11,9 +11,9 @@ import gql from 'graphql-tag';
 import Header from '../client/Header.client';
 import Footer from './Footer.server';
 import Cart from '../client/Cart.client';
-import { Suspense } from 'react';
 
-// A server component that defines a structure and organization of a page that can be used in different parts of the Hydrogen app
+// A server component that defines a structure and organization
+//  of a page that can be used in different parts of the Hydrogen app
 const Layout = ({ children, hero }) => {
   const { data } = useShopQuery({
     query: QUERY,

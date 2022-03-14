@@ -5,7 +5,7 @@ import React from 'react';
 
 import Layout from './Layout.server';
 import Button from '../client/Button.client';
-import ProductCard from '../ProductCard';
+import ProductCard from './ProductCard.server';
 
 type NotFoundProps = {
   country?: { isoCode: string };

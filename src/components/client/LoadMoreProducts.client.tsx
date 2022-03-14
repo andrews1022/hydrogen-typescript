@@ -1,10 +1,27 @@
 import React from 'react';
 import { useServerState } from '@shopify/hydrogen/client';
+
+// svg components
 import SpinnerIcon from '../svgs/SpinnerIcon';
 
-// A client component that provides functionality to initially show a subset of products and a button to load more products
-const LoadMoreProducts = ({ startingCount }) => {
+// props
+type LoadMoreProductsProps = {
+  startingCount: number;
+};
+
+// A client component that provides functionality to initially show a
+// subset of products and a button to load more products
+const LoadMoreProducts = ({ startingCount }: LoadMoreProductsProps) => {
   const { pending, serverState, setServerState } = useServerState();
+
+  const onClickHandler = () => {
+    setServerState(
+      'collectionProductCount',
+      serverState.collectionProductCount
+        ? serverState.collectionProductCount + 24
+        : startingCount + 1
+    );
+  };
 
   return (
     <div className='flex justify-center h-14'>
@@ -16,14 +33,7 @@ const LoadMoreProducts = ({ startingCount }) => {
             pending ? 'opacity-50' : undefined
           }`}
           disabled={pending}
-          onClick={() => {
-            setServerState(
-              'collectionProductCount',
-              serverState.collectionProductCount
-                ? serverState.collectionProductCount + 24
-                : startingCount + 1
-            );
-          }}
+          onClick={onClickHandler}
           type='button'
         >
           Load more

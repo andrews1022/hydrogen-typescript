@@ -1,3 +1,4 @@
+import React from 'react';
 import { useShopQuery, Seo } from '@shopify/hydrogen';
 import { ProductProviderFragment, ProductSeoFragment } from '@shopify/hydrogen/fragments';
 import gql from 'graphql-tag';
