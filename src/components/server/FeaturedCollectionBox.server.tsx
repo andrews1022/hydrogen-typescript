@@ -1,20 +1,28 @@
+import React from 'react';
 import { flattenConnection, useShopQuery } from '@shopify/hydrogen';
 import { ImageFragment, ProductProviderFragment } from '@shopify/hydrogen/fragments';
 import gql from 'graphql-tag';
-import FeaturedCollection from '../FeaturedCollection';
 
-const FeaturedCollectionBox = ({ country }) => {
+// components
+import FeaturedCollection from './FeaturedCollection.server';
+
+type FeaturedCollectionBoxProps = {
+  country: {
+    isoCode: string;
+  };
+};
+
+const FeaturedCollectionBox = ({ country }: FeaturedCollectionBoxProps) => {
   const { data } = useShopQuery({
+    preload: true,
     query: QUERY,
     variables: {
       country: country.isoCode
-    },
-    preload: true
+    }
   });
 
   const collections = data ? flattenConnection(data.collections) : [];
-  const featuredCollection =
-    collections && collections.length > 1 ? collections[1] : collections[0];
+  const featuredCollection = collections && collections.length ? collections[1] : collections[0];
 
   return <FeaturedCollection collection={featuredCollection} />;
 };

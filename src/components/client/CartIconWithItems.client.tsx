@@ -1,4 +1,7 @@
+import React from 'react';
 import { useCart } from '@shopify/hydrogen/client';
+
+// svg components
 import CartIcon from '../svgs/CartIcon';
 
 // A client component that specifies the icon to use if a cart contains merchandise
@@ -19,6 +22,7 @@ const CartIconWithItems = () => {
           {totalQuantity > 0 ? totalQuantity : null}
         </div>
       </div>
+
       <span className='sr-only'>Cart, {totalQuantity} items</span>
     </>
   );

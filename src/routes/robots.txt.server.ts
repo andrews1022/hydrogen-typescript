@@ -4,7 +4,6 @@
 
 const RobotsTxt = ({ request, response }) => {
   response.doNotStream();
-  response.headers.set('content-type', 'text/plain');
 
   const url = new URL(request.url);
 

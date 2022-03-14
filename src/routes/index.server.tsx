@@ -1,13 +1,24 @@
-import Layout from '../components/server/Layout.server';
-import Welcome from '../components/server/Welcome.server';
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
+
+// server components
 import BoxFallback from '../components/server/BoxFallback.server';
-import GradientBackground from '../components/svgs/GradientBackground';
-import SeoForHomepage from '../components/server/SeoForHomepage.server';
 import FeaturedProductsBox from '../components/server/FeaturedProductsBox.server';
 import FeaturedCollectionBox from '../components/server/FeaturedCollectionBox.server';
+import Layout from '../components/server/Layout.server';
+import SeoForHomepage from '../components/server/SeoForHomepage.server';
+import Welcome from '../components/server/Welcome.server';
 
-const Index = ({ country = { isoCode: 'US' } }) => {
+// svg components
+import GradientBackground from '../components/svgs/GradientBackground';
+
+// props
+type IndexProps = {
+  country: {
+    isoCode: string;
+  };
+};
+
+const Index = ({ country = { isoCode: 'US' } }: IndexProps) => {
   return (
     <Layout hero={<GradientBackground />}>
       <Suspense fallback={null}>

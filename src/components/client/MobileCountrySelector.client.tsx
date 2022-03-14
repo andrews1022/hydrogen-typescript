@@ -1,10 +1,13 @@
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useAvailableCountries, useCountry } from '@shopify/hydrogen/client';
 import { Listbox } from '@headlessui/react';
 
-import { ArrowIcon, CheckIcon } from './CountrySelector.client';
+// svg components
+import ArrowIconAlt from '../svgs/ArrowIconAlt';
+import CheckIcon from '../svgs/CheckIcon';
 
-// A client component that selects the appropriate country to display for products on a mobile storefront
+// A client component that selects the appropriate country
+// to display for products on a mobile storefront
 const MobileCountrySelector = () => {
   const countries = [...useAvailableCountries()].sort((a, b) => a.name.localeCompare(b.name));
   const [selectedCountry, setSelectedCountry] = useCountry();
@@ -18,19 +21,24 @@ const MobileCountrySelector = () => {
 
   return (
     <div className='mt-8 rounded border border-gray-200 w-full'>
-      <Listbox onChange={setCountry}>
+      <Listbox onChange={setCountry} value={selectedCountry}>
         {({ open }) => (
           <>
             <Listbox.Button className='w-full flex justify-between text-sm items-center py-5 px-7'>
-              {selectedCountry.name}
-              <ArrowIcon isOpen={open} />
+              {selectedCountry?.name}
+              <ArrowIconAlt isOpen={open} />
             </Listbox.Button>
+
             <Listbox.Options className='w-full px-3 pb-2 text-lg'>
-              <Listbox.Option disabled className='font-medium px-4 pb-4 w-full text-left uppercase'>
+              <Listbox.Option
+                className='font-medium px-4 pb-4 w-full text-left uppercase'
+                disabled
+                value={open}
+              >
                 Country
               </Listbox.Option>
               {countries.map((country) => {
-                const isSelected = country.isoCode === selectedCountry.isoCode;
+                const isSelected = country.isoCode === selectedCountry?.isoCode;
                 return (
                   <Listbox.Option key={country.isoCode} value={country.isoCode}>
                     {({ active }) => (

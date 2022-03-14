@@ -1,3 +1,4 @@
+import React from 'react';
 import { useServerState } from '@shopify/hydrogen/client';
 import SpinnerIcon from '../svgs/SpinnerIcon';
 

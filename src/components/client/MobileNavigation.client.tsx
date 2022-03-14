@@ -1,30 +1,27 @@
-import { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link } from '@shopify/hydrogen/client';
 import { FocusTrap } from '@headlessui/react';
+
+// npm types
+import type { Dispatch, SetStateAction } from 'react';
+import type { Collection } from '@shopify/hydrogen/dist/esnext/graphql/types/types';
 
 import MobileCountrySelector from './MobileCountrySelector.client';
 import OpenIcon from '../svgs/OpenIcon';
 import ArrowRightIcon from '../svgs/ArrowRightIcon';
+import CloseIcon from '../svgs/CloseIcon';
 
-let scrollPosition = 0;
-
-const CloseIcon = () => {
-  return (
-    <svg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
-      <path
-        d='M1 17L17 1M1 1L17 17'
-        stroke='black'
-        strokeWidth='2'
-        strokeLinecap='round'
-        strokeLinejoin='round'
-      />
-    </svg>
-  );
+type MobileNavigationProps = {
+  collections: Collection[];
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 // A client component that defines the navigation for a mobile storefront
-const MobileNavigation = ({ collections, isOpen, setIsOpen }) => {
+const MobileNavigation = ({ collections, isOpen, setIsOpen }: MobileNavigationProps) => {
   const OpenFocusTrap = isOpen ? FocusTrap : Fragment;
+
+  let scrollPosition = 0;
 
   useEffect(() => {
     if (isOpen) {
@@ -46,6 +43,7 @@ const MobileNavigation = ({ collections, isOpen, setIsOpen }) => {
         >
           {isOpen ? <CloseIcon /> : <OpenIcon />}
         </button>
+
         {isOpen ? (
           <div className='fixed -left-0 top-20 w-full h-screen z-10 bg-gray-50 px-4 md:px-12 py-7'>
             <ul>

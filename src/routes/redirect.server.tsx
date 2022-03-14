@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Redirect = ({ response }) => {
   response.redirect('/products/snowboard');
 

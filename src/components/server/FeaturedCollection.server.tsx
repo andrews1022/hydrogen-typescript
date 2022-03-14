@@ -1,8 +1,14 @@
+import React from 'react';
 import { Image, Link } from '@shopify/hydrogen';
+import type { Collection } from '@shopify/hydrogen/dist/esnext/graphql/types/types';
+
+type FeaturedCollectionProps = {
+  collection: Collection;
+};
 
 // A shared component that defines a single featured collection to display on a storefront
-const FeaturedCollection = ({ collection }) => {
-  return collection ? (
+const FeaturedCollection = ({ collection }: FeaturedCollectionProps) =>
+  collection ? (
     <div className='shadow-xl rounded-xl grid grid-cols-1 lg:grid-cols-2 items-center bg-white overflow-hidden'>
       {collection.image ? <Image width='622' height='465' data={collection.image} /> : null}
 
@@ -18,6 +24,5 @@ const FeaturedCollection = ({ collection }) => {
       </div>
     </div>
   ) : null;
-};
 
 export default FeaturedCollection;

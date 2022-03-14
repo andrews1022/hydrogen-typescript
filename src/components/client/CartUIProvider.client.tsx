@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useContext, createContext } from 'react';
+import React, { createContext, useCallback, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
 type Context = {
@@ -14,7 +14,8 @@ type CartUIProviderProps = {
   children: ReactNode;
 };
 
-// A client component that defines the behavior that occurs when a user is interacting with a cart (for example, opening or closing it)
+// A client component that defines the behavior that occurs when a user
+// is interacting with a cart (for example, opening or closing it)
 const CartUIProvider = ({ children }: CartUIProviderProps) => {
   const [open, setOpen] = useState(false);
 

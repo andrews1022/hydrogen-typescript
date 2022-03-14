@@ -1,6 +1,10 @@
 import React from 'react';
-import { BUTTON_PRIMARY_CLASSES } from '../../constants/button';
+
+// custom hooks
 import useCartUI from '../../hooks/useCartUI';
+
+// constants
+import { BUTTON_PRIMARY_CLASSES } from '../../constants/button';
 
 const CartEmpty = () => {
   const { closeCart } = useCartUI();
@@ -8,7 +12,8 @@ const CartEmpty = () => {
   return (
     <div className='p-7 flex flex-col'>
       <p className='mb-4 text-lg text-gray-500 text-center'>Your cart is empty</p>
-      <button type='button' onClick={closeCart} className={BUTTON_PRIMARY_CLASSES}>
+
+      <button className={BUTTON_PRIMARY_CLASSES} onClick={closeCart} type='button'>
         Continue Shopping
       </button>
     </div>

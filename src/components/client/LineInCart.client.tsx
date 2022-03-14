@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   CartLineImage,
   CartLinePrice,
@@ -6,7 +7,8 @@ import {
   Link,
   useCartLine
 } from '@shopify/hydrogen/client';
-import React from 'react';
+
+// client components
 import CartItemQuantity from './CartItemQuantity.client';
 
 const LineInCart = () => {

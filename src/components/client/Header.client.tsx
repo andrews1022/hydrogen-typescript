@@ -1,23 +1,35 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from '@shopify/hydrogen/client';
-import React from 'react';
+import type { Collection } from '@shopify/hydrogen/dist/esnext/graphql/types/types';
+
+// client components
 import CartToggle from './CartToggle.client';
 import CountrySelector from './CountrySelector.client';
 import Navigation from './Navigation.client';
 import MobileNavigation from './MobileNavigation.client';
+
+// custom hooks
 import useCartUI from '../../hooks/useCartUI';
 
+// props
+type HeaderProps = {
+  collections: Collection[];
+  storeName: string;
+};
+
 // A client component that specifies the content of the header on the website
-const Header = ({ collections, storeName }) => {
+const Header = ({ collections, storeName }: HeaderProps) => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const { isCartOpen } = useCartUI();
 
   useEffect(() => {
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    const barWidth = window.innerWidth - document.documentElement.clientWidth;
 
-    setScrollbarWidth(scrollbarWidth);
+    setScrollbarWidth(barWidth);
   }, [isCartOpen]);
+
+  const clickHandler = () => (isMobileNavOpen ? setIsMobileNavOpen(false) : null);
 
   return (
     <header className='h-20 lg:h-32' role='banner'>
@@ -42,11 +54,7 @@ const Header = ({ collections, storeName }) => {
             <Link className='font-black uppercase text-3xl tracking-widest' to='/'>
               {storeName}
             </Link>
-            <CartToggle
-              handleClick={() => {
-                if (isMobileNavOpen) setIsMobileNavOpen(false);
-              }}
-            />
+            <CartToggle handleClick={clickHandler} />
           </div>
           <Navigation collections={collections} />
         </div>

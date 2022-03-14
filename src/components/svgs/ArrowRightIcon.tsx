@@ -1,5 +1,6 @@
 import React from 'react';
 
+// props
 type ArrowRightIconProps = {
   className: string;
 };

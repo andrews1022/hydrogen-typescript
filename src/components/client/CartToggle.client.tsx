@@ -1,9 +1,18 @@
 import React from 'react';
-import useCartUI from '../../hooks/useCartUI';
+
+// client components
 import CartIconWithItems from './CartIconWithItems.client';
 
+// custom hooks
+import useCartUI from '../../hooks/useCartUI';
+
+// props
+type CartToggleProps = {
+  handleClick: () => void | null;
+};
+
 // A client component that defines the behavior when a user toggles a cart
-const CartToggle = ({ handleClick }) => {
+const CartToggle = ({ handleClick }: CartToggleProps) => {
   const cartUI = useCartUI();
 
   if (cartUI == null) {
