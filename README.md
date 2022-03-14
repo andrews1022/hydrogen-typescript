@@ -4,6 +4,8 @@ Just messing around with the Hydrogen Starter Template. Goal is to remove Tailwi
 
 Just using GitHub to keep track of progress. Check out the original repo [here](https://github.com/Shopify/hydrogen).
 
+Types are based off of version 0.12.0.
+
 ## Unfinished Files
 
 The following files are not fully typed at the moment:
