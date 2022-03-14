@@ -1,39 +1,12 @@
 import React from 'react';
 import { useShopQuery, Seo } from '@shopify/hydrogen';
 import { ProductProviderFragment, ProductSeoFragment } from '@shopify/hydrogen/fragments';
+import type { Product } from '@shopify/hydrogen/dist/esnext/graphql/types/types';
 import gql from 'graphql-tag';
 
 import ProductDetails from '../../components/client/ProductDetails.client';
 import NotFound from '../../components/server/NotFound.server';
 import Layout from '../../components/server/Layout.server';
-
-const Product = ({ country = { isoCode: 'US' }, params }) => {
-  const { handle } = params;
-
-  const {
-    data: { product }
-  } = useShopQuery({
-    query: QUERY,
-    variables: {
-      country: country.isoCode,
-      handle
-    },
-    preload: true
-  });
-
-  if (!product) {
-    return <NotFound />;
-  }
-
-  return (
-    <Layout>
-      <Seo type='product' data={product} />
-      <ProductDetails product={product} />
-    </Layout>
-  );
-};
-
-export default Product;
 
 const QUERY = gql`
   query product(
@@ -59,3 +32,44 @@ const QUERY = gql`
   ${ProductProviderFragment}
   ${ProductSeoFragment}
 `;
+
+// query
+type ProductQueryResponse = { product: Product };
+
+// props
+type ProductProps = {
+  country: {
+    isoCode: string;
+  };
+  params: {
+    handle: string;
+  };
+};
+
+const ProductRoute = ({ country = { isoCode: 'US' }, params }: ProductProps) => {
+  const { handle } = params;
+
+  const {
+    data: { product }
+  } = useShopQuery<ProductQueryResponse>({
+    preload: true,
+    query: QUERY,
+    variables: {
+      country: country.isoCode,
+      handle
+    }
+  });
+
+  if (!product) {
+    return <NotFound />;
+  }
+
+  return (
+    <Layout>
+      <Seo type='product' data={product} />
+      <ProductDetails product={product} />
+    </Layout>
+  );
+};
+
+export default ProductRoute;

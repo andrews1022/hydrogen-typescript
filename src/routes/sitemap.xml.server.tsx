@@ -1,7 +1,8 @@
 import { flattenConnection, useShopQuery } from '@shopify/hydrogen';
 import gql from 'graphql-tag';
 
-const MAX_URLS = 250; // the google limit is 50K, however, SF API only allow querying for 250 resources each time
+// the google limit is 50K, however, SF API only allow querying for 250 resources each time
+const MAX_URLS = 250;
 
 const Sitemap = ({ request, response }) => {
   response.doNotStream();

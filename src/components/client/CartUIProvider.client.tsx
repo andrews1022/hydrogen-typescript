@@ -1,14 +1,14 @@
 import React, { createContext, useCallback, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
-type Context = {
+export type ShopifyCartContext = {
   isCartOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
   toggleCart: () => void;
 };
 
-export const CartContext = createContext<Context>(null as never);
+export const CartContext = createContext<ShopifyCartContext>(null as never);
 
 type CartUIProviderProps = {
   children: ReactNode;

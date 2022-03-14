@@ -42,12 +42,12 @@ type NotFoundQueryResponse = {
 // props
 type NotFoundProps = {
   country?: { isoCode: string };
-  response?: any;
-  serverProps?: any;
+  response?: any; // TODO: Update to not use type any
+  serverProps?: any; // TODO: Update to not use type any
 };
 
 // A server component that defines the content to display when a page isn't found (404 error)
-const NotFound = ({ country = { isoCode: 'US' }, response }) => {
+const NotFound = ({ country = { isoCode: 'US' }, response, serverProps }: NotFoundProps) => {
   response.doNotStream();
   response.writeHead({ status: 404, statusText: 'Not found' });
 
