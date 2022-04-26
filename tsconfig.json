@@ -9,8 +9,9 @@
     "pretty": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "es5"
+    "target": "ESNext",
+    "types": ["vite/client"]
   },
-  "include": ["./src"],
+  "include": ["./src", "./tests"],
   "exclude": ["./node_modules"]
 }
