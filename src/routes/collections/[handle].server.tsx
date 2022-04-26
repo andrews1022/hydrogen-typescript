@@ -1,16 +1,38 @@
 import { useShop, useShopQuery, flattenConnection, Seo } from '@shopify/hydrogen';
+import type { Collection } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import gql from 'graphql-tag';
+import React from 'react';
 
 import LoadMoreProducts from '../../components/LoadMoreProducts.client';
 import Layout from '../../components/Layout.server';
 import ProductCard from '../../components/ProductCard';
 import NotFound from '../../components/NotFound.server';
 
-const Collection = ({ country = { isoCode: 'US' }, collectionProductCount = 24, params }) => {
+// query type
+type CollectionRouteQueryResponse = {
+  collection: Collection;
+};
+
+// props type
+type CollectionProps = {
+  collectionProductCount: number;
+  country: {
+    isoCode: string;
+  };
+  params: {
+    handle: string;
+  };
+};
+
+const CollectionRoute = ({
+  country = { isoCode: 'US' },
+  collectionProductCount = 24,
+  params
+}: CollectionProps) => {
   const { languageCode } = useShop();
 
   const { handle } = params;
-  const { data } = useShopQuery({
+  const { data } = useShopQuery<CollectionRouteQueryResponse>({
     query: QUERY,
     variables: {
       handle,
@@ -25,9 +47,9 @@ const Collection = ({ country = { isoCode: 'US' }, collectionProductCount = 24, 
     return <NotFound />;
   }
 
-  const collection = data.collection;
+  const { collection } = data;
   const products = flattenConnection(collection.products);
-  const hasNextPage = data.collection.products.pageInfo.hasNextPage;
+  const { hasNextPage } = data.collection.products.pageInfo;
 
   return (
     <Layout>
@@ -50,7 +72,7 @@ const Collection = ({ country = { isoCode: 'US' }, collectionProductCount = 24, 
   );
 };
 
-export default Collection;
+export default CollectionRoute;
 
 const QUERY = gql`
   query CollectionDetails(

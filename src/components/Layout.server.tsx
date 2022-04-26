@@ -5,20 +5,43 @@ import {
   LocalizationProvider,
   CacheHours
 } from '@shopify/hydrogen';
+import type { Collection, Product, Shop } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import gql from 'graphql-tag';
+import React, { Suspense } from 'react';
+import type { ReactNode } from 'react';
 
 import Header from './Header.client';
 import Footer from './Footer.server';
 import Cart from './Cart.client';
-import { Suspense } from 'react';
+
+// query type
+type LayoutQueryResponse = {
+  collections: {
+    edges: {
+      node: Collection;
+    }[];
+  };
+  products: {
+    edges: {
+      node: Product;
+    }[];
+  };
+  shop: Shop;
+};
+
+// props type
+type LayoutProps = {
+  children: ReactNode;
+  hero?: ReactNode;
+};
 
 /**
  * A server component that defines a structure and organization of a page that can be used in different parts of the Hydrogen app
  */
-export default function Layout({ children, hero }) {
+const Layout = ({ children, hero }: LayoutProps) => {
   const { languageCode } = useShop();
 
-  const { data } = useShopQuery({
+  const { data } = useShopQuery<LayoutQueryResponse>({
     query: QUERY,
     variables: {
       language: languageCode,
@@ -27,6 +50,7 @@ export default function Layout({ children, hero }) {
     cache: CacheHours(),
     preload: '*'
   });
+
   const collections = data ? flattenConnection(data.collections) : null;
   const products = data ? flattenConnection(data.products) : null;
   const storeName = data ? data.shop.name : '';
@@ -39,7 +63,6 @@ export default function Layout({ children, hero }) {
         </a>
       </div>
       <div className='min-h-screen max-w-screen text-gray-700 font-sans'>
-        {/* TODO: Find out why Suspense needs to be here to prevent hydration errors. */}
         <Suspense fallback={null}>
           <Header collections={collections} storeName={storeName} />
           <Cart />
@@ -54,7 +77,9 @@ export default function Layout({ children, hero }) {
       </div>
     </LocalizationProvider>
   );
-}
+};
+
+export default Layout;
 
 const QUERY = gql`
   query layoutContent($language: LanguageCode, $numCollections: Int!)
