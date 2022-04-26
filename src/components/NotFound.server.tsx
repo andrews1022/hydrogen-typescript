@@ -8,7 +8,7 @@ import ProductCard from './ProductCard';
 /**
  * A server component that defines the content to display when a page isn't found (404 error)
  */
-function NotFoundHero() {
+const NotFoundHero = () => {
   return (
     <div className='py-10 border-b border-gray-200'>
       <div className='max-w-3xl text-center mx-4 md:mx-auto'>
@@ -23,9 +23,9 @@ function NotFoundHero() {
       </div>
     </div>
   );
-}
+};
 
-export default function NotFound({ country = { isoCode: 'US' }, response }) {
+const NotFound = ({ country = { isoCode: 'US' }, response }) => {
   if (response) {
     response.doNotStream();
     response.writeHead({ status: 404, statusText: 'Not found' });
@@ -40,6 +40,7 @@ export default function NotFound({ country = { isoCode: 'US' }, response }) {
       language: languageCode
     }
   });
+
   const products = data ? flattenConnection(data.products) : [];
 
   return (
@@ -57,7 +58,9 @@ export default function NotFound({ country = { isoCode: 'US' }, response }) {
       </div>
     </Layout>
   );
-}
+};
+
+export default NotFound;
 
 const QUERY = gql`
   query NotFoundProductDetails($country: CountryCode, $language: LanguageCode)
