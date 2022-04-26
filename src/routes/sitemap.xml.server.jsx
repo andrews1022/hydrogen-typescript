@@ -1,21 +1,21 @@
-import {flattenConnection, useShopQuery, useShop} from '@shopify/hydrogen';
+import { flattenConnection, useShopQuery, useShop } from '@shopify/hydrogen';
 import gql from 'graphql-tag';
 
 const MAX_URLS = 250; // the google limit is 50K, however, SF API only allow querying for 250 resources each time
 
-export default function Sitemap({request, response}) {
+export default function Sitemap({ request, response }) {
   response.doNotStream();
 
-  const {languageCode} = useShop();
+  const { languageCode } = useShop();
 
-  const {data} = useShopQuery({
+  const { data } = useShopQuery({
     query: QUERY,
     variables: {
       language: languageCode,
-      urlLimits: MAX_URLS,
+      urlLimits: MAX_URLS
     },
     // Cache the page for 24 hours
-    cache: {maxAge: 60 * 60 * 24},
+    cache: { maxAge: 60 * 60 * 24 }
   });
 
   response.headers.set('content-type', 'application/xml');
@@ -32,12 +32,12 @@ function shopSitemap(data, baseUrl) {
     const finalObject = {
       url,
       lastMod: product.updatedAt,
-      changeFreq: 'daily',
+      changeFreq: 'daily'
     };
 
     if (product.featuredImage.url) {
       finalObject.image = {
-        url: product.featuredImage.url,
+        url: product.featuredImage.url
       };
 
       if (product.title) {
@@ -52,29 +52,25 @@ function shopSitemap(data, baseUrl) {
     }
   });
 
-  const collectionsData = flattenConnection(data.collections).map(
-    (collection) => {
-      const url = collection.onlineStoreUrl
-        ? collection.onlineStoreUrl
-        : `${baseUrl}/collections/${collection.handle}`;
+  const collectionsData = flattenConnection(data.collections).map((collection) => {
+    const url = collection.onlineStoreUrl
+      ? collection.onlineStoreUrl
+      : `${baseUrl}/collections/${collection.handle}`;
 
-      return {
-        url,
-        lastMod: collection.updatedAt,
-        changeFreq: 'daily',
-      };
-    },
-  );
+    return {
+      url,
+      lastMod: collection.updatedAt,
+      changeFreq: 'daily'
+    };
+  });
 
   const pagesData = flattenConnection(data.pages).map((page) => {
-    const url = page.onlineStoreUrl
-      ? page.onlineStoreUrl
-      : `${baseUrl}/pages/${page.handle}`;
+    const url = page.onlineStoreUrl ? page.onlineStoreUrl : `${baseUrl}/pages/${page.handle}`;
 
     return {
       url,
       lastMod: page.updatedAt,
-      changeFreq: 'weekly',
+      changeFreq: 'weekly'
     };
   });
 
@@ -89,7 +85,7 @@ function shopSitemap(data, baseUrl) {
     </urlset>`;
 }
 
-function renderUrlTag({url, lastMod, changeFreq, image}) {
+function renderUrlTag({ url, lastMod, changeFreq, image }) {
   return `
     <url>
       <loc>${url}</loc>
@@ -111,12 +107,8 @@ function renderUrlTag({url, lastMod, changeFreq, image}) {
 }
 
 const QUERY = gql`
-  query sitemaps($urlLimits: Int, $language: LanguageCode)
-  @inContext(language: $language) {
-    products(
-      first: $urlLimits
-      query: "published_status:'online_store:visible'"
-    ) {
+  query sitemaps($urlLimits: Int, $language: LanguageCode) @inContext(language: $language) {
+    products(first: $urlLimits, query: "published_status:'online_store:visible'") {
       edges {
         node {
           updatedAt
@@ -130,10 +122,7 @@ const QUERY = gql`
         }
       }
     }
-    collections(
-      first: $urlLimits
-      query: "published_status:'online_store:visible'"
-    ) {
+    collections(first: $urlLimits, query: "published_status:'online_store:visible'") {
       edges {
         node {
           updatedAt

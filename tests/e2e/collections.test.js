@@ -1,4 +1,4 @@
-import {startHydrogenServer} from '../utils';
+import { startHydrogenServer } from '../utils';
 import Collections from '../../src/routes/collections/[handle].server';
 
 describe('collections', () => {

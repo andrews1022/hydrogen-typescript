@@ -1,3 +1,5 @@
+/* eslint-disable global-require */
+
 module.exports = {
   content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
@@ -9,18 +11,18 @@ module.exports = {
               borderColor: theme('colors.gray.200'),
               borderTopWidth: '1px',
               marginTop: '2rem',
-              marginBottom: '2rem',
+              marginBottom: '2rem'
             },
             'ol > li::before': {
-              color: theme('colors.gray.900'),
+              color: theme('colors.gray.900')
             },
             'ul > li::before': {
-              backgroundColor: theme('colors.gray.900'),
-            },
-          },
-        },
-      }),
-    },
+              backgroundColor: theme('colors.gray.900')
+            }
+          }
+        }
+      })
+    }
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [require('@tailwindcss/typography')]
 };

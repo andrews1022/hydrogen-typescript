@@ -1,10 +1,10 @@
-export async function api(request, {queryShop}) {
+export async function api(request, { queryShop }) {
   const {
     data: {
-      localization: {availableCountries},
-    },
+      localization: { availableCountries }
+    }
   } = await queryShop({
-    query: QUERY,
+    query: QUERY
   });
 
   return availableCountries.sort((a, b) => a.name.localeCompare(b.name));

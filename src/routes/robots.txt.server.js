@@ -4,16 +4,16 @@
  * Learn more: https://developers.google.com/search/docs/advanced/robots/create-robots-txt
  */
 
-export default function RobotsTxt({request, response}) {
+export default function RobotsTxt({ request, response }) {
   response.doNotStream();
   response.headers.set('content-type', 'text/plain');
 
   const url = new URL(request.url);
 
-  return response.send(robotsTxtData({url: url.origin}));
+  return response.send(robotsTxtData({ url: url.origin }));
 }
 
-function robotsTxtData({url}) {
+function robotsTxtData({ url }) {
   const sitemapUrl = url ? `${url}/sitemap.xml` : undefined;
 
   return `

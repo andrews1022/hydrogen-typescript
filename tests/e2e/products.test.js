@@ -1,4 +1,4 @@
-import {startHydrogenServer} from '../utils';
+import { startHydrogenServer } from '../utils';
 import Product from '../../src/routes/products/[handle].server';
 
 describe('products', () => {
