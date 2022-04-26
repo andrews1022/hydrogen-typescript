@@ -13,21 +13,19 @@ import NotFound from './components/NotFound.server';
 import LoadingFallback from './components/LoadingFallback';
 import CartProvider from './components/CartProvider.client';
 
-function App({ routes }) {
-  return (
-    <Suspense fallback={<LoadingFallback />}>
-      <ShopifyProvider shopifyConfig={shopifyConfig}>
-        <CartProvider>
-          <DefaultSeo />
-          <Router>
-            <FileRoutes routes={routes} />
-            <Route path='*' page={<NotFound />} />
-          </Router>
-        </CartProvider>
-      </ShopifyProvider>
-    </Suspense>
-  );
-}
+const App = ({ routes }) => (
+  <Suspense fallback={<LoadingFallback />}>
+    <ShopifyProvider shopifyConfig={shopifyConfig}>
+      <CartProvider>
+        <DefaultSeo />
+        <Router>
+          <FileRoutes routes={routes} />
+          <Route path='*' page={<NotFound />} />
+        </Router>
+      </CartProvider>
+    </ShopifyProvider>
+  </Suspense>
+);
 
 const routes = import.meta.globEager('./routes/**/*.server.[jt](s|sx)');
 
